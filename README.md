@@ -5,8 +5,8 @@
 A package to easily group checkboxes in different styles in Flutter projects.
 
 <p>
-    <img src="https://github.com/zfnadia/grouped_checkbox/blob/master/screenshots/one.png"/>
-    <img src="https://github.com/zfnadia/grouped_checkbox/blob/master/screenshots/two.png"/>
+    <img width="220px" src="https://raw.githubusercontent.com/zfnadia/grouped-checkbox/master/screenshots/one.jpg"/>
+    <img width="220px" src="https://raw.githubusercontent.com/zfnadia/grouped-checkbox/master/screenshots/two.jpg"/>
     <img src="https://media.giphy.com/media/Y1do7LrbSxTOcQa5qF/giphy.gif"/>
 </p>
 
