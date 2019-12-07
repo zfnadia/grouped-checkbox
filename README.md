@@ -13,8 +13,10 @@ A package to easily group checkboxes in different styles in Flutter projects.
 ## Usage
 To use this plugin, add `grouped_checkbox` as a [dependency in your pubspec.yaml file](https://flutter.dev/platform-plugins/).
 
+```dart
 dependencies:
   grouped_checkbox: 0.0.1
+```
 
 ### Example
 
