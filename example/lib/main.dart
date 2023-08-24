@@ -76,7 +76,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   print('SELECTED ITEM LIST $itemList');
                 });
               },
-              orientation: CheckboxOrientation.VERTICAL,
+              orientation: CheckboxOrientation.vertical,
               checkColor: Colors.purpleAccent,
               activeColor: Colors.lightBlue,
             ),
@@ -121,7 +121,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   print('SELECTED ITEM LIST $itemList');
                 });
               },
-              orientation: CheckboxOrientation.HORIZONTAL,
+              orientation: CheckboxOrientation.horizontal,
               checkColor: Colors.purpleAccent,
               activeColor: Colors.lightBlue,
             ),
@@ -181,7 +181,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     print('SELECTED ITEM LIST $itemList');
                   });
                 },
-                orientation: CheckboxOrientation.WRAP,
+                orientation: CheckboxOrientation.wrap,
                 checkColor: Colors.purpleAccent,
                 activeColor: Colors.lightBlue,
               ),

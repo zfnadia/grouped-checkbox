@@ -231,13 +231,13 @@ class _GroupedCheckboxState extends State<GroupedCheckbox> {
     for (int i = 0; i < widget.itemList!.length; i++) {
       widgetList.add(item(i));
     }
-    if (widget.orientation == CheckboxOrientation.VERTICAL) {
+    if (widget.orientation == CheckboxOrientation.vertical) {
       for (final item in widgetList) {
         content.add(Row(children: <Widget>[item]));
       }
       finalWidget = SingleChildScrollView(
           scrollDirection: Axis.vertical, child: Column(children: content));
-    } else if (widget.orientation == CheckboxOrientation.HORIZONTAL) {
+    } else if (widget.orientation == CheckboxOrientation.horizontal) {
       for (final item in widgetList) {
         content.add(Column(children: <Widget>[item]));
       }
