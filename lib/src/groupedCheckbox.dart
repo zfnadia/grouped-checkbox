@@ -9,16 +9,16 @@ import 'package:grouped_checkbox/src/checkboxOrientation.dart';
 
 class GroupedCheckbox extends StatefulWidget {
   /// A list of string that describes each checkbox. Each item must be distinct.
-  final List<String> itemList;
+  final List<String>? itemList;
 
   /// A list of string which specifies automatically checked checkboxes.
   /// Every element must match an item from itemList.
-  final List<String> checkedItemList;
+  final List<String?>? checkedItemList;
 
   /// Specifies which boxes should be disabled.
   /// If this is non-null, no boxes will be disabled.
   /// The strings passed to this must match the labels.
-  final List<String> disabled;
+  final List<String>? disabled;
 
   /// The style to use for the labels.
   final TextStyle textStyle;
@@ -31,25 +31,25 @@ class GroupedCheckbox extends StatefulWidget {
 
   /// The color to use when this checkbox is checked.
   ///
-  /// Defaults to [ThemeData.toggleableActiveColor].
-  final Color activeColor;
+  /// Defaults to [ColorScheme.secondary].
+  final Color? activeColor;
 
   /// The color to use for the check icon when this checkbox is checked.
   ///
   /// Defaults to Color(0xFFFFFFFF)
-  final Color checkColor;
+  final Color? checkColor;
 
   /// If true the checkbox's value can be true, false, or null.
   final bool tristate;
 
   /// Configures the minimum size of the tap target.
-  final MaterialTapTargetSize materialTapTargetSize;
+  final MaterialTapTargetSize? materialTapTargetSize;
 
   /// The color for the checkbox's Material when it has the input focus.
-  final Color focusColor;
+  final Color? focusColor;
 
   /// The color for the checkbox's Material when a pointer is hovering over it.
-  final Color hoverColor;
+  final Color? hoverColor;
 
   //.......................WRAP ORIENTATION.....................................
 
@@ -159,7 +159,7 @@ class GroupedCheckbox extends StatefulWidget {
   /// [wrapCrossAxisAlignment] is either [WrapCrossAlignment.start] or
   /// [WrapCrossAlignment.end], or there's more than one child, then the
   /// [wrapTextDirection] (or the ambient [Directionality]) must not be null.
-  final TextDirection wrapTextDirection;
+  final TextDirection? wrapTextDirection;
 
   /// Determines the order to lay children out vertically and how to interpret
   /// `start` and `end` in the vertical direction.
@@ -185,10 +185,10 @@ class GroupedCheckbox extends StatefulWidget {
   /// [wrapVerticalDirection] must not be null.
   final VerticalDirection wrapVerticalDirection;
 
-  GroupedCheckbox({
-    @required this.itemList,
-    @required this.orientation,
-    @required this.onChanged,
+  const GroupedCheckbox({Key? key,
+    required this.itemList,
+    required this.orientation,
+    required this.onChanged,
     this.checkedItemList,
     this.textStyle = const TextStyle(),
     this.disabled,
@@ -206,14 +206,14 @@ class GroupedCheckbox extends StatefulWidget {
     this.wrapCrossAxisAlignment = WrapCrossAlignment.start,
     this.wrapTextDirection,
     this.wrapVerticalDirection = VerticalDirection.down,
-  });
+  }) : super(key: key);
 
   @override
-  _GroupedCheckboxState createState() => _GroupedCheckboxState();
+  State<GroupedCheckbox> createState() => _GroupedCheckboxState();
 }
 
 class _GroupedCheckboxState extends State<GroupedCheckbox> {
-  List<String> selectedListItems = List<String>();
+  List<String?>? selectedListItems = [];
 
   @override
   Widget build(BuildContext context) {
@@ -227,17 +227,17 @@ class _GroupedCheckboxState extends State<GroupedCheckbox> {
     if (widget.checkedItemList != null) {
       selectedListItems = widget.checkedItemList;
     }
-    List<Widget> widgetList = List<Widget>();
-    for (int i = 0; i < widget.itemList.length; i++) {
+    List<Widget> widgetList = [];
+    for (int i = 0; i < widget.itemList!.length; i++) {
       widgetList.add(item(i));
     }
-    if (widget.orientation == CheckboxOrientation.VERTICAL) {
+    if (widget.orientation == CheckboxOrientation.vertical) {
       for (final item in widgetList) {
         content.add(Row(children: <Widget>[item]));
       }
       finalWidget = SingleChildScrollView(
           scrollDirection: Axis.vertical, child: Column(children: content));
-    } else if (widget.orientation == CheckboxOrientation.HORIZONTAL) {
+    } else if (widget.orientation == CheckboxOrientation.horizontal) {
       for (final item in widgetList) {
         content.add(Column(children: <Widget>[item]));
       }
@@ -246,7 +246,6 @@ class _GroupedCheckboxState extends State<GroupedCheckbox> {
     } else {
       finalWidget = SingleChildScrollView(
         child: Wrap(
-            children: widgetList,
             spacing: widget.wrapSpacing,
             runSpacing: widget.wrapRunSpacing,
             textDirection: widget.wrapTextDirection,
@@ -254,7 +253,8 @@ class _GroupedCheckboxState extends State<GroupedCheckbox> {
             verticalDirection: widget.wrapVerticalDirection,
             alignment: widget.wrapAlignment,
             direction: Axis.horizontal,
-            runAlignment: widget.wrapRunAlignment),
+            runAlignment: widget.wrapRunAlignment,
+            children: widgetList),
       );
     }
     return finalWidget;
@@ -270,23 +270,23 @@ class _GroupedCheckboxState extends State<GroupedCheckbox> {
             focusColor: widget.focusColor,
             hoverColor: widget.hoverColor,
             materialTapTargetSize: widget.materialTapTargetSize,
-            value: selectedListItems.contains(widget.itemList[index]),
+            value: selectedListItems!.contains(widget.itemList![index]),
             tristate: widget.tristate,
             onChanged: (widget.disabled != null &&
-                    widget.disabled.contains(widget.itemList.elementAt(index)))
+                    widget.disabled!.contains(widget.itemList!.elementAt(index)))
                 ? null
-                : (bool selected) {
-                    selected
-                        ? selectedListItems.add(widget.itemList[index])
-                        : selectedListItems.remove(widget.itemList[index]);
+                : (bool? selected) {
+                    selected!
+                        ? selectedListItems!.add(widget.itemList![index])
+                        : selectedListItems!.remove(widget.itemList![index]);
                     setState(() {
                       widget.onChanged(selectedListItems);
                     });
                   }),
         Text(
-          widget.itemList[index].isEmpty ? '' : widget.itemList[index],
+          widget.itemList![index].isEmpty ? '' : widget.itemList![index],
           style: widget.disabled != null &&
-                  widget.disabled.contains(widget.itemList.elementAt(index))
+                  widget.disabled!.contains(widget.itemList!.elementAt(index))
               ? TextStyle(color: Theme.of(context).disabledColor)
               : widget.textStyle,
         )
@@ -294,3 +294,4 @@ class _GroupedCheckboxState extends State<GroupedCheckbox> {
     );
   }
 }
+

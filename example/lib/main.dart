@@ -23,8 +23,8 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-  final String title;
+  MyHomePage({Key? key, this.title}) : super(key: key);
+  final String? title;
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -42,13 +42,13 @@ class _MyHomePageState extends State<MyHomePage> {
 
   static List<String> checkedItemList = ['Green', 'Yellow'];
 
-  List<String> selectedItemList = checkedItemList ?? [];
+  List<String> selectedItemList = checkedItemList;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(widget.title!),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -76,7 +76,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   print('SELECTED ITEM LIST $itemList');
                 });
               },
-              orientation: CheckboxOrientation.VERTICAL,
+              orientation: CheckboxOrientation.vertical,
               checkColor: Colors.purpleAccent,
               activeColor: Colors.lightBlue,
             ),
@@ -121,7 +121,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   print('SELECTED ITEM LIST $itemList');
                 });
               },
-              orientation: CheckboxOrientation.HORIZONTAL,
+              orientation: CheckboxOrientation.horizontal,
               checkColor: Colors.purpleAccent,
               activeColor: Colors.lightBlue,
             ),
@@ -181,7 +181,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     print('SELECTED ITEM LIST $itemList');
                   });
                 },
-                orientation: CheckboxOrientation.WRAP,
+                orientation: CheckboxOrientation.wrap,
                 checkColor: Colors.purpleAccent,
                 activeColor: Colors.lightBlue,
               ),
