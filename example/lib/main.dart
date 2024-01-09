@@ -72,12 +72,21 @@ class _MyHomePageState extends State<MyHomePage> {
                 updateHorizontalItems,
                 [allItemList[1]]),
             Divider(height: 2.0),
-            buildCheckboxSection(
-                'WRAP ORIENTATION EXAMPLE',
-                CheckboxOrientation.wrap,
-                selectedWrapItems,
-                updateWrapItems,
-                [allItemList[2]]),
+            Container(
+              decoration: BoxDecoration(
+                  border: Border.all(color: Colors.blue),
+                  borderRadius: BorderRadius.all(Radius.circular(8.0)),
+              ),
+              margin: EdgeInsets.only(left: 15.0, right: 15.0, top: 15.0),
+              height: MediaQuery.of(context).size.height / 4,
+              width: MediaQuery.of(context).size.width,
+              child: buildCheckboxSection(
+                  'WRAP ORIENTATION EXAMPLE',
+                  CheckboxOrientation.wrap,
+                  selectedWrapItems,
+                  updateWrapItems,
+                  [allItemList[2]]),
+            ),
             SizedBox(height: 50.0),
           ],
         ),
