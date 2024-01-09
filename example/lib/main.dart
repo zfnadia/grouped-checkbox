@@ -1,7 +1,7 @@
 /*
 Name: Nadia Ferdoush
-Date: 07/12/19
-Copyright: © 2019, Nadia Ferdoush. All rights reserved.
+Date: 08/01/2024
+Copyright: © 2024, Nadia Ferdoush. All rights reserved.
 */
 
 import 'package:flutter/material.dart';
@@ -14,9 +14,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Grouped Checkbox Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
       home: MyHomePage(title: 'Grouped Checkbox Demo'),
     );
   }
@@ -31,183 +28,124 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  List<String> allItemList = [
-    'Red',
-    'Green',
-    'Blue',
-    'Yellow',
-    'Black',
-    'Violet',
+  final List<ColorItem> allItemList = [
+    ColorItem('Red', Colors.red),
+    ColorItem('Green', Colors.green),
+    ColorItem('Blue', Colors.blue),
+    ColorItem('Yellow', Colors.yellow),
+    ColorItem('Black', Colors.black),
+    ColorItem('Violet', Colors.purple),
   ];
 
-  static List<String> checkedItemList = ['Green', 'Yellow'];
+  List<ColorItem> selectedVerticalItems = [];
+  List<ColorItem> selectedHorizontalItems = [];
+  List<ColorItem> selectedWrapItems = [];
 
-  List<String> selectedItemList = checkedItemList;
+  @override
+  void initState() {
+    super.initState();
+    selectedVerticalItems = [allItemList[2], allItemList[3]];
+    selectedHorizontalItems = [allItemList[3], allItemList[4]];
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title!),
+        backgroundColor: Colors.blue,
+        title: Text(widget.title!, style: TextStyle(color: Colors.white)),
       ),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(top: 15.0, bottom: 15.0),
-              child: Text(
+            buildCheckboxSection(
                 'VERTICAL ORIENTATION EXAMPLE',
-                style: TextStyle(color: Colors.blue, fontSize: 15.0),
-              ),
-            ),
-            GroupedCheckbox(
-              wrapSpacing: 10.0,
-              wrapRunSpacing: 15.0,
-              wrapTextDirection: TextDirection.ltr,
-              wrapRunAlignment: WrapAlignment.center,
-              wrapVerticalDirection: VerticalDirection.down,
-              wrapAlignment: WrapAlignment.center,
-              itemList: allItemList,
-              checkedItemList: checkedItemList,
-              disabled: ['Black'],
-              onChanged: (itemList) {
-                setState(() {
-                  selectedItemList = itemList;
-                  print('SELECTED ITEM LIST $itemList');
-                });
-              },
-              orientation: CheckboxOrientation.vertical,
-              checkColor: Colors.purpleAccent,
-              activeColor: Colors.lightBlue,
-            ),
-            SizedBox(
-              height: 5.0,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: <Widget>[
-                  Text(
-                    'Selected Items:',
-                    style: TextStyle(color: Colors.blue),
-                  ),
-                  SizedBox(width: 4.0),
-                  Expanded(
-                    child: Text('$selectedItemList'),
-                  )
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 15.0, bottom: 15.0),
-              child: Divider(
-                height: 2.0,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 15.0),
-              child: Text(
+                CheckboxOrientation.vertical,
+                selectedVerticalItems,
+                updateVerticalItems,
+                [allItemList[0]]),
+            Divider(height: 2.0),
+            buildCheckboxSection(
                 'HORIZONTAL ORIENTATION EXAMPLE',
-                style: TextStyle(color: Colors.blue, fontSize: 15.0),
-              ),
-            ),
-            GroupedCheckbox(
-              itemList: allItemList,
-              checkedItemList: checkedItemList,
-              disabled: ['Black'],
-              onChanged: (itemList) {
-                setState(() {
-                  selectedItemList = itemList;
-                  print('SELECTED ITEM LIST $itemList');
-                });
-              },
-              orientation: CheckboxOrientation.horizontal,
-              checkColor: Colors.purpleAccent,
-              activeColor: Colors.lightBlue,
-            ),
-            SizedBox(
-              height: 5.0,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: <Widget>[
-                  Text(
-                    'Selected Items:',
-                    style: TextStyle(color: Colors.blue),
-                  ),
-                  SizedBox(width: 4.0),
-                  Expanded(
-                    child: Text('$selectedItemList'),
-                  )
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(top: 15.0, bottom: 15.0),
-              child: Divider(
-                height: 2.0,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 15.0),
-              child: Text(
-                'WRAP EXAMPLE',
-                style: TextStyle(color: Colors.blue, fontSize: 15.0),
-              ),
-            ),
-            Container(
-              decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Colors.blue,
-                  ),
-                  borderRadius: BorderRadius.all(Radius.circular(8.0))),
-              margin: EdgeInsets.only(left: 15.0, right: 15.0),
-              height: MediaQuery.of(context).size.height / 4,
-              width: MediaQuery.of(context).size.width,
-              child: GroupedCheckbox(
-                wrapSpacing: 10.0,
-                wrapRunSpacing: 15.0,
-                wrapTextDirection: TextDirection.ltr,
-                wrapRunAlignment: WrapAlignment.center,
-                wrapVerticalDirection: VerticalDirection.down,
-                wrapAlignment: WrapAlignment.center,
-                itemList: allItemList,
-                checkedItemList: checkedItemList,
-                disabled: ['Black'],
-                onChanged: (itemList) {
-                  setState(() {
-                    selectedItemList = itemList;
-                    print('SELECTED ITEM LIST $itemList');
-                  });
-                },
-                orientation: CheckboxOrientation.wrap,
-                checkColor: Colors.purpleAccent,
-                activeColor: Colors.lightBlue,
-              ),
-            ),
-            SizedBox(height: 5.0),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: <Widget>[
-                  Text(
-                    'Selected Items:',
-                    style: TextStyle(color: Colors.blue),
-                  ),
-                  SizedBox(width: 4.0),
-                  Expanded(
-                    child: Text('$selectedItemList'),
-                  )
-                ],
-              ),
-            ),
-            SizedBox(
-              height: 50.0,
-            ),
+                CheckboxOrientation.horizontal,
+                selectedHorizontalItems,
+                updateHorizontalItems,
+                [allItemList[1]]),
+            Divider(height: 2.0),
+            buildCheckboxSection(
+                'WRAP ORIENTATION EXAMPLE',
+                CheckboxOrientation.wrap,
+                selectedWrapItems,
+                updateWrapItems,
+                [allItemList[2]]),
+            SizedBox(height: 50.0),
           ],
         ),
       ),
     );
   }
+
+  void updateVerticalItems(List<ColorItem> newItems) {
+    setState(() {
+      selectedVerticalItems = newItems;
+    });
+  }
+
+  void updateHorizontalItems(List<ColorItem> newItems) {
+    setState(() {
+      selectedHorizontalItems = newItems;
+    });
+  }
+
+  void updateWrapItems(List<ColorItem> newItems) {
+    setState(() {
+      selectedWrapItems = newItems;
+    });
+  }
+
+  Widget buildCheckboxSection(
+      String title,
+      CheckboxOrientation orientation,
+      List<ColorItem> selectedItems,
+      Function(List<ColorItem>) updateFunction,
+      List<ColorItem> disabledItems) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 15.0, bottom: 15.0),
+      child: Column(
+        children: <Widget>[
+          Text(
+            title,
+            style: TextStyle(color: Colors.blue, fontSize: 15.0),
+          ),
+          GroupedCheckbox<ColorItem>(
+            itemList: allItemList,
+            checkedItemList: selectedItems,
+            disabled: disabledItems,
+            onChanged: (itemList) {
+              updateFunction(itemList!);
+            },
+            orientation: orientation,
+            checkColor: Colors.purpleAccent,
+            activeColor: Colors.lightBlue,
+            itemWidgetBuilder: (item) => Text(
+              item.name,
+              style: TextStyle(color: item.color),
+            ),
+          ),
+          SizedBox(height: 5.0),
+          Text(
+            'Selected Colors: ${selectedItems.map((item) => item.name).join(', ')}',
+            style: TextStyle(color: Colors.blue),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class ColorItem {
+  String name;
+  Color color;
+
+  ColorItem(this.name, this.color);
 }
